@@ -6,6 +6,15 @@ Hooks are functions that let you "Hook into" React state and lifecycle features 
 
 Good comparison between this.setState and Hooks [here](https://reactjs.org/docs/hooks-state.html)
 
+### Rules for using Hooks
+
+Hooks are JavaScript functions, but they impose two additional rules:
+
+Only call Hooks at the top level. Don’t call Hooks inside loops, conditions, or nested functions.
+Only call Hooks from React function components. Don’t call Hooks from regular JavaScript functions. (There is just one other valid place to call Hooks — your own custom Hooks. We’ll learn about them in a moment.)
+
+Directly from React Dev Blog
+
 ## What is the useState Hook?
 
 Let me start off with a simple counter example: (I have commented the code to give a better overview)
