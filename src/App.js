@@ -37,18 +37,21 @@ function CounterApp() {
 }
 
 /*
-  One of the first useState Gotchas you are going to run into us when you are using objects. You have probably become use to doing something like:
+  When using multiple useState's you may ask wouldn't it be better to do something like this:
+  const [state, setState] = useState({
+    count: 0,
+    isCounterControlsShowing: false,
+  })
+  I wouldn't blame you for thinking this because if you translate back to classes way it maps well:
   this.state = {
     property1: value1,
     property2: value2,
   }
 
-  and your first taught when you go to use useState is to have the same:
+  However, they are not the same, when we use setState in class version e.g `this.setState({count: this.state.count + 1})` react would 'merge' state updates (all merging means is it keeps all the old state and only updates what you told it.). However useState doesn't not merge updates, that is why if you ran the same code via an updater function `setState({count: count + 1})` you would actually end up delete the isCounterControlsShowing property because the updater function sets the value to whatever you passed in, it doesn't care about old values...
 
-  useState({
-     property1: value1,
-    property2: value2,
-  })
+  That is why if you decide to use an object for multiple properties make sure you always merge the states yourself, most of them it can be accomplished using spread syntax, if you have deeper objects you will run into issues and at that point you should really think about changing the data shape.
+
 */
 
 // Need a simpler example...
