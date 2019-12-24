@@ -5,7 +5,7 @@ import "./App.css";
   Hooks are functions that let you "Hook into" React state and lifecycle features from function components.
   React will preserve the value of useState during re-renders, you can think of the below as a function that contains and keeps state every time you call it.
 
-  Good comparision between this.setState and Hooks https://reactjs.org/docs/hooks-state.html
+  Good comparison between this.setState and Hooks https://reactjs.org/docs/hooks-state.html
 */
 function CounterApp() {
   // useState can take any JS type, number, strings, objects*, arrays etc etc, the value you use here is the initial value.
@@ -50,7 +50,7 @@ function CounterApp() {
 
   However, they are not the same, when we use setState in class version e.g `this.setState({count: this.state.count + 1})` react would 'merge' state updates (all merging means is it keeps all the old state and only updates what you told it.). However useState doesn't not merge updates, that is why if you ran the same code via an updater function `setState({count: count + 1})` you would actually end up delete the isCounterControlsShowing property because the updater function sets the value to whatever you passed in, it doesn't care about old values...
 
-  That is why if you decide to use an object for multiple properties make sure you always merge the states yourself, most of them it can be accomplished using spread syntax, if you have deeper objects you will run into issues and at that point you should really think about changing the data shape.
+  If you decide to use an object for multiple properties always merge the old and new state, it can be accomplished using spread syntax, if you have deeper objects you will run into issues but at that point you should really think about changing the data shape.
 
 */
 
