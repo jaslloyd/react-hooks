@@ -11,7 +11,7 @@ function CounterApp() {
   // useState can take any JS type, number, strings, objects*, arrays etc etc, the value you use here is the initial value.
   // useState returns [value, dispatch/updater function] which you can use array destructing to get each of the pair.
   const [count, setCount] = useState(0);
-  // You can have more than one useState in a Component, using a boolean here to show or hide a section.
+  // You can have more than one useState in a Component, using a boolean here to show or hide the buttons.
   const [isCounterControlsShowing, toggleCounterControls] = useState(true);
   return (
     <div className="App">
@@ -30,8 +30,6 @@ function CounterApp() {
       <button onClick={() => toggleCounterControls(!isCounterControlsShowing)}>
         Toggle Counter controls
       </button>
-
-      <TodoList />
     </div>
   );
 }
