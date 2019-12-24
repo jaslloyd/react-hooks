@@ -64,20 +64,11 @@ function TodoList() {
   ]);
   const [newTodo, setNewTodo] = useState("");
 
-  function markTodoCompleted(todoIndex) {
-    const existingTodos = [...todos];
-    existingTodos[todoIndex].isCompleted = true;
-    setTodos(existingTodos);
-  }
   return (
     <div className="todos">
       <ul>
         {todos.map((todo, i) => (
-          <li>
-            {todo.name}
-            <button onClick={() => markTodoCompleted(i)}>Mark as Done</button>
-            {todo.isCompleted && "Completed"}
-          </li>
+          <li>{todo.name}</li>
         ))}
       </ul>
       <input
@@ -88,6 +79,7 @@ function TodoList() {
       <button
         onClick={() =>
           setTodos([
+            // Notice how I am spreading the existing todos before I add a new one.
             ...todos,
             {
               name: newTodo,
