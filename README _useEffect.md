@@ -5,7 +5,8 @@ useEffect Summary
 - Lets you preform side effects in function components.
 - useEffect is `componentDidMount`, `componentDidUpdate` and `componentWillUnmount` combined.
 - It runs something _after_ render!
-- By default it runs after first render and after every update, (there are ways to contorl it)
+- By default it runs after first render and after every update, (there are ways to control it, see below)
+- useEffect takes a 2nd parameter which is an array of dependencies that will cause the effect to re-run. Instead of running after every update it will only run after one of the dependencies change.
 - Unlike `componentDidMount` or `componentDidUpdate`, effects scheduled with `useEffect` don’t block the browser from updating the screen.
 - There are two types of Effects:
   <!-- TODO: Add link to Effect without cleanup -->
@@ -30,7 +31,7 @@ function TitleUpdate() {
   })
 
   return (
-    <div onClick={() => incrementClicks({clickAmount: clickAmount + 1})}>
+    <div onClick={() => incrementClicks({ clickAmount: clickAmount + 1 })}>
       Click me and watch the Window Title change!
     </div>
   )
