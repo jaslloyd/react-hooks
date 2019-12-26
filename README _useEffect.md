@@ -1,12 +1,10 @@
 # React Hooks: useEffect
 
-useEffect Summary
-
 - Lets you preform side effects in function components.
 - useEffect is `componentDidMount`, `componentDidUpdate` and `componentWillUnmount` combined.
 - It runs something _after_ render!
 - By default it runs after first render and after every update, (there are ways to control it, see below)
-- useEffect takes a 2nd parameter which is an array of dependencies that will cause the effect to re-run. Instead of running after every update it will only run after one of the dependencies change.
+- useEffect takes a optional 2nd parameter which is an array of dependencies that will cause the effect to re-run. Instead of running after every update it will only run after any of the dependencies change.
 - Unlike `componentDidMount` or `componentDidUpdate`, effects scheduled with `useEffect` don’t block the browser from updating the screen.
 - There are two types of Effects:
   <!-- TODO: Add link to Effect without cleanup -->
@@ -17,32 +15,38 @@ useEffect Summary
       <!-- TODO: Add link to Effect with Cleanup -->
   - Effects with Cleanup
     - Subscriptions / Event listeners
-    - Intervals / Timeouts
 
 ## Effects without Cleanup
 
+### Manual DOM mutations
+
 ```jsx
-// Manual DOM mutations
 function TitleUpdate() {
   const [clickAmount, incrementClicks] = useState(0);
 
   useEffect(() => {
     document.title = `You clicked ${clickAmount} times`;
-  })
+  });
 
   return (
     <div onClick={() => incrementClicks({ clickAmount: clickAmount + 1 })}>
       Click me and watch the Window Title change!
     </div>
-  )
+  );
 }
+```
 
+### Fetching Data
 
-// Making a network request (note: Hooks are not the final solution to making network requests in React, Suspense is meant for that in the future)
+Making a network request (note: Hooks are not the final solution to making network requests in React, Suspense is coming for that).
+I have added comments into the code on some gotchas you need to be careful with.
+
+```jsx
 function TodosApp() {
   const [todos, setTodos] = useState([]);
   // This will run on every single render!!
   useEffect(() => {
+    // The function that you pass into useEffect cannot be async. It must return a cleanup function or nothing.
     const fetchData = async () => {
       const result = await fetch(
         `https://jsonplaceholder.typicode.com/todos`,
@@ -63,11 +67,11 @@ function TodosApp() {
       setData(await result.json());
     };
     fetchData();
-  }, []); // <=== Providing an empty array means only run after the first render or better way this function had no "dependencies" requiring it to run again.
+  }, []); // Providing an empty array means run only after the first render or this function had no "dependencies" requiring it to rerun.
 
   // ...
 
-  // This will only run after the first render then only when the query state changes, default to 'blog'
+  // This will only run after the first render then only when the query state changes, defaults to 'blog'
   const [query, setQuery] = useState('blog');
   useEffect(() => {
     const fetchData = async () => {
@@ -82,5 +86,29 @@ function TodosApp() {
   return (
     ...
   );
+}
+```
+
+## Effects with Cleanup
+
+### Subscriptions / Event listeners
+
+Subscriptions / Event listeners should always be cleanup when they are not needed that way we can avoid memory leaks.
+
+```jsx
+function SubscriptionApp() {
+  const [todos, setTodos] = useState([]);
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      // Do something when the user either tabs out of your site.
+    }
+    // If you do not know the Page Visibility API I have a post on it here: https://thedeployguy.com/reducing-unnecessary-network-requests-using-the-page-visibility-api/
+    document.addEventListener("visibilitychange", handleVisibilityChange;
+
+    // This is the cleanup function, that will run after the component is unmounted .... (like componentDidUnmount)
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+    }
+  });
 }
 ```
