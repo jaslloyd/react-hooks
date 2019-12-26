@@ -10,8 +10,8 @@ useEffect Summary
 - There are two types of Effects:
   <!-- TODO: Add link to Effect without cleanup -->
   - Effects without Cleanup
-    - Fetching Data
     - Manual DOM mutations
+    - Fetching Data
     - Logging
       <!-- TODO: Add link to Effect with Cleanup -->
   - Effects with Cleanup
@@ -21,6 +21,22 @@ useEffect Summary
 ## Effects without Cleanup
 
 ```jsx
+// Manual DOM mutations
+function TitleUpdate() {
+  const [clickAmount, incrementClicks] = useState(0);
+
+  useEffect(() => {
+    document.title = `You clicked ${clickAmount} times`;
+  })
+
+  return (
+    <div onClick={() => incrementClicks({clickAmount: clickAmount + 1})}>
+      Click me and watch the Window Title change!
+    </div>
+  )
+}
+
+
 // Making a network request (note: Hooks are not the final solution to making network requests in React, Suspense is meant for that in the future)
 function TodosApp() {
   const [todos, setTodos] = useState([]);
