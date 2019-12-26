@@ -52,6 +52,8 @@ function TodosApp() {
     fetchData();
   });
 
+  // ...
+
   // This will only run after the first render
   useEffect(() => {
     const fetchData = async () => {
@@ -63,8 +65,10 @@ function TodosApp() {
     fetchData();
   }, []); // <=== Providing an empty array means only run after the first render or better way this function had no "dependencies" requiring it to run again.
 
-    // This will only run after the first render then only when the query state changes
-  const [query, setQuery] = useState('');
+  // ...
+
+  // This will only run after the first render then only when the query state changes, default to 'blog'
+  const [query, setQuery] = useState('blog');
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(
