@@ -29,9 +29,9 @@ function TitleUpdate() {
   });
 
   return (
-    <div onClick={() => incrementClicks({ clickAmount: clickAmount + 1 })}>
+    <button className="App" onClick={() => incrementClicks(clickAmount + 1)}>
       Click me and watch the Window Title change!
-    </div>
+    </button>
   );
 }
 ```
@@ -48,10 +48,8 @@ function TodosApp() {
   useEffect(() => {
     // The function that you pass into useEffect cannot be async. It must return a cleanup function or nothing.
     const fetchData = async () => {
-      const result = await fetch(
-        `https://jsonplaceholder.typicode.com/todos`,
-      );
-      setData(await result.json());
+      const result = await fetch(`https://jsonplaceholder.typicode.com/todos`);
+      setTodos(await result.json());
     };
     fetchData();
   });
@@ -61,10 +59,8 @@ function TodosApp() {
   // This will only run after the first render
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch(
-        `https://jsonplaceholder.typicode.com/todos`,
-      );
-      setData(await result.json());
+      const result = await fetch(`https://jsonplaceholder.typicode.com/todos`);
+      setTodos(await result.json());
     };
     fetchData();
   }, []); // Providing an empty array means run only after the first render or this function had no "dependencies" requiring it to rerun.
@@ -72,19 +68,25 @@ function TodosApp() {
   // ...
 
   // This will only run after the first render then only when the query state changes, defaults to 'blog'
-  const [query, setQuery] = useState('blog');
+  const [query, setQuery] = useState("blog");
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(
-        `https://jsonplaceholder.typicode.com/todos?query=${query}`,
+        `https://jsonplaceholder.typicode.com/todos?query=${query}`
       );
-      setData(await result.json());
+      setTodos(await result.json());
     };
     fetchData();
   }, [query]); // If the query dependency changes rerun this function
 
   return (
-    ...
+    <div>
+      <ul>
+        {todos.map(todo => (
+          <li>{todo}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
 ```
@@ -101,14 +103,14 @@ function SubscriptionApp() {
   useEffect(() => {
     const handleVisibilityChange = () => {
       // Do something when the user either tabs out of your site.
-    }
+    };
     // If you do not know the Page Visibility API I have a post on it here: https://thedeployguy.com/reducing-unnecessary-network-requests-using-the-page-visibility-api/
-    document.addEventListener("visibilitychange", handleVisibilityChange;
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     // This is the cleanup function, that will run after the component is unmounted .... (like componentDidUnmount)
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange)
-    }
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   });
 }
 ```
