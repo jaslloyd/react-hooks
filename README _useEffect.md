@@ -1,5 +1,7 @@
 # React Hooks: useEffect
 
+This is the second post in the series on React Hooks, previously we discussed [useState](https://thedeployguy.com). I am going to try keep this as short as possible so here we go:
+
 - Lets you preform side effects in function components.
 - useEffect is `componentDidMount`, `componentDidUpdate` and `componentWillUnmount` combined.
 - It runs something _after_ render!
