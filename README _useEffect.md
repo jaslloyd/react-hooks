@@ -44,7 +44,7 @@ I have added comments into the code on some gotchas you need to be careful with.
 ```jsx
 function TodosApp() {
   const [todos, setTodos] = useState([]);
-  // This will run on every single render!!
+  // This will run on every single render!! (And gets you into a nasty loop)
   useEffect(() => {
     // The function that you pass into useEffect cannot be async. It must return a cleanup function or nothing.
     const fetchData = async () => {
@@ -67,23 +67,31 @@ function TodosApp() {
 
   // ...
 
-  // This will only run after the first render then only when the query state changes, defaults to 'blog'
-  const [query, setQuery] = useState("blog");
+  // This will only run after the first render then only when the searchUserId state changes, defaults to '1'
+  const [searchUserId, setSearchUserId] = useState("1");
+  // This is to avoid sending a request every time we type in the input
+  const [serachText, setSearchText] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(
-        `https://jsonplaceholder.typicode.com/todos?query=${query}`
+        `https://jsonplaceholder.typicode.com/todos?userId=${searchUserId}`
       );
       setTodos(await result.json());
     };
     fetchData();
-  }, [query]); // If the query dependency changes rerun this function
+  }, [serachText]); // If the query dependency changes rerun this function
 
+  const handleChange = e => {
+    e.preventDefault();
+    setSearchUserId(e.target.value);
+  };
   return (
     <div>
+      <input type="text" onChange={handleChange} />
+      <button onClick={() => setSearchText(searchUserId)}>Get Users</button>
       <ul>
         {todos.map(todo => (
-          <li>{todo}</li>
+          <li key={todo.id}>{todo.title}</li>
         ))}
       </ul>
     </div>
