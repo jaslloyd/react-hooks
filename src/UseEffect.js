@@ -42,16 +42,16 @@ function TodosApp() {
   // This will only run after the first render then only when the searchUserId state changes, defaults to '1'
   const [searchUserId, setSearchUserId] = useState("1");
   // This is to avoid sending a request every time we type in the input
-  const [serachText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("1");
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(
-        `https://jsonplaceholder.typicode.com/todos?userId=${searchUserId}`
+        `https://jsonplaceholder.typicode.com/todos?userId=${searchText}`
       );
       setTodos(await result.json());
     };
     fetchData();
-  }, [serachText]); // If the query dependency changes rerun this function
+  }, [searchText]); // If the query dependency changes rerun this function
 
   const handleChange = e => {
     e.preventDefault();
