@@ -6,8 +6,6 @@ This repo has code that is used and discussed on my blog https://thedeployguy.co
 
 Hooks are functions that let you "Hook into" React state and lifecycle features from function components. React will preserve the value of useState during re-renders.
 
-Good comparison between this.setState and Hooks [here](https://reactjs.org/docs/hooks-state.html)
-
 ### Rules for using Hooks
 
 Hooks are JavaScript functions, but they impose two additional rules:
